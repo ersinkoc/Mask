@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="20" fill="url(#grad)" />
+  <path d="M30 30 L70 30 L70 50 L30 50 Z" fill="#fff" opacity="0.3" />
+  <path d="M30 52 L50 52 L50 70 L30 70 Z" fill="#fff" opacity="0.5" />
+  <path d="M54 52 L70 52 L70 70 L54 70 Z" fill="#fff" />
+  <text x="50" y="75" font-family="monospace" font-size="10" fill="#fff" text-anchor="middle">MASK</text>
+</svg>
