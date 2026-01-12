@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - @oxog/mask</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>API Reference</h1>
+            <p>Complete API documentation for @oxog/mask</p>
+            <span class="badge" data-version="1.0.0">v1.0.0</span>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <button class="nav-toggle">☰</button>
+            <ul class="nav-list">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#getting-started">Getting Started</a></li>
+                <li><a href="index.html">API Reference</a></li>
+                <li><a href="../guides/index.html">Guides</a></li>
+                <li><a href="../examples/index.html">Examples</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <main class="main">
+            <h1>Core API</h1>
+
+            <!-- createMask -->
+            <section id="createMask">
+                <h2>createMask()</h2>
+                <p>Creates a new mask instance with default configuration.</p>
+
+                <div class="code-example">
+                    <div class="code-example-header">TypeScript</div>
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">import { createMask } from '@oxog/mask';
+
+const mask = createMask();</code></pre>
+                    </div>
+                </div>
+
+                <h3>Parameters</h3>
+                <p>None - uses default configuration.</p>
+
+                <h3>Returns</h3>
+                <p><code>MaskKernel</code> - The mask kernel instance.</p>
+
+                <h3>Example</h3>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">const mask = createMask();
+mask.use(require('@oxog/mask/plugins/core/email').email());
+
+const masked = mask.email('test@example.com');
+// → t**t@e***e.com</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- mask.use -->
+            <section id="mask-use">
+                <h2>mask.use(plugin)</h2>
+                <p>Registers a plugin with the kernel.</p>
+
+                <div class="code-example">
+                    <div class="code-example-header">TypeScript</div>
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.use(plugin: Plugin): void</code></pre>
+                    </div>
+                </div>
+
+                <h3>Parameters</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>plugin</td>
+                            <td>Plugin</td>
+                            <td>The plugin to register</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Example</h3>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.use(require('@oxog/mask/plugins/core/email').email());
+mask.use(require('@oxog/mask/plugins/core/phone').phone());
+mask.use(require('@oxog/mask/plugins/core/card').card());</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- mask.email -->
+            <section id="mask-email">
+                <h2>mask.email(value, options?)</h2>
+                <p>Masks an email address while preserving the domain structure.</p>
+
+                <div class="code-example">
+                    <div class="code-example-header">TypeScript</div>
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.email(value: string, options?: MaskOptions): string</code></pre>
+                    </div>
+                </div>
+
+                <h3>Parameters</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>value</td>
+                            <td>string</td>
+                            <td>The email address to mask</td>
+                        </tr>
+                        <tr>
+                            <td>options</td>
+                            <td>MaskOptions</td>
+                            <td>Optional masking configuration</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Options</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>strategy</td>
+                            <td>'full' | 'middle' | 'first:N' | 'last:N' | 'partial:N'</td>
+                            <td>'middle'</td>
+                            <td>Masking strategy</td>
+                        </tr>
+                        <tr>
+                            <td>char</td>
+                            <td>string</td>
+                            <td>'*'</td>
+                            <td>Character to use for masking</td>
+                        </tr>
+                        <tr>
+                            <td>first</td>
+                            <td>number</td>
+                            <td>-</td>
+                            <td>Number of characters to keep at start</td>
+                        </tr>
+                        <tr>
+                            <td>last</td>
+                            <td>number</td>
+                            <td>-</td>
+                            <td>Number of characters to keep at end</td>
+                        </tr>
+                        <tr>
+                            <td>format</td>
+                            <td>'display' | 'compact' | 'log'</td>
+                            <td>'display'</td>
+                            <td>Output format</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Examples</h3>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">// Default (middle strategy)
+mask.email('john.doe@example.com');
+// → j***n.***@e***e.com
+
+// Full masking
+mask.email('john.doe@example.com', { strategy: 'full' });
+// → *******************@*********.***
+
+// Custom character
+mask.email('john.doe@example.com', { char: '•' });
+// → j••n.d•••@e••••••.•••
+
+// First and last
+mask.email('john.doe@example.com', { strategy: 'first:2', last: 3 });
+// → jo***.***@e***.com
+
+// Log format
+mask.email('john.doe@example.com', { format: 'log' });
+// → [REDACTED:email]</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- mask.phone -->
+            <section id="mask-phone">
+                <h2>mask.phone(value, options?)</h2>
+                <p>Masks a phone number with international format support.</p>
+
+                <div class="code-example">
+                    <div class="code-example-header">TypeScript</div>
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.phone(value: string, options?: MaskOptions): string</code></pre>
+                    </div>
+                </div>
+
+                <h3>Parameters</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>value</td>
+                            <td>string</td>
+                            <td>The phone number to mask</td>
+                        </tr>
+                        <tr>
+                            <td>options</td>
+                            <td>MaskOptions</td>
+                            <td>Optional masking configuration</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Examples</h3>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">// Default (last 4 digits)
+mask.phone('+1-555-123-4567');
+// → +1-***-***-4567
+
+// First 3 digits
+mask.phone('+1-555-123-4567', { strategy: 'first:3' });
+// → +1-555-***-****
+
+// Custom character
+mask.phone('+1-555-123-4567', { char: 'X' });
+// → +1-XXX-XXX-4567
+
+// Compact format
+mask.phone('+1-555-123-4567', { format: 'compact' });
+// → +1-555-123-****</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- mask.card -->
+            <section id="mask-card">
+                <h2>mask.card(value, options?)</h2>
+                <p>Masks a credit card with Luhn validation.</p>
+
+                <div class="code-example">
+                    <div class="code-example-header">TypeScript</div>
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.card(value: string, options?: MaskOptions): string</code></pre>
+                    </div>
+                </div>
+
+                <h3>Parameters</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>value</td>
+                            <td>string</td>
+                            <td>The credit card number to mask</td>
+                        </tr>
+                        <tr>
+                            <td>options</td>
+                            <td>MaskOptions</td>
+                            <td>Optional masking configuration</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Examples</h3>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">// Display format (default)
+mask.card('4532015112830366');
+// → **** **** **** 0366
+
+// Compact format
+mask.card('4532015112830366', { format: 'compact' });
+// → ************0366
+
+// Full masking
+mask.card('4532015112830366', { strategy: 'full' });
+// → ******************
+
+// Log format
+mask.card('4532015112830366', { format: 'log' });
+// → [REDACTED:card]</code></pre>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Note:</strong> The card plugin validates credit card numbers using the Luhn algorithm.
+                    Invalid card numbers will throw an <code>InvalidValueError</code>.
+                </div>
+            </section>
+
+            <!-- mask.mask -->
+            <section id="mask-mask">
+                <h2>mask.mask(value, options?)</h2>
+                <p>Masks a value or object with field-specific options.</p>
+
+                <div class="code-example">
+                    <div class="code-example-header">TypeScript</div>
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.mask(value: any, options?: MaskOptions): any</code></pre>
+                    </div>
+                </div>
+
+                <h3>Parameters</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>value</td>
+                            <td>any</td>
+                            <td>The value or object to mask</td>
+                        </tr>
+                        <tr>
+                            <td>options</td>
+                            <td>MaskOptions</td>
+                            <td>Optional masking configuration</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Options</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Option</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>fields</td>
+                            <td>Record&lt;string, MaskOptions&gt;</td>
+                            <td>Field-specific masking options</td>
+                        </tr>
+                        <tr>
+                            <td>format</td>
+                            <td>'display' | 'compact' | 'log'</td>
+                            <td>Apply format to all fields</td>
+                        </tr>
+                        <tr>
+                            <td>char</td>
+                            <td>string</td>
+                            <td>Default masking character</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Examples</h3>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">// Object masking
+const user = {
+  name: 'John Doe',
+  email: 'john@example.com',
+  phone: '+1-555-123-4567',
+};
+
+const masked = mask.mask(user, {
+  fields: {
+    email: { strategy: 'middle' },
+    phone: { strategy: 'last:4' },
+  },
+});
+
+// → {
+//   name: 'John Doe',
+//   email: 'j***n.***@e***e.com',
+//   phone: '+1-555-123-****'
+// }
+
+// Nested fields
+const data = {
+  user: {
+    email: 'john@example.com',
+  },
+  billing: {
+    card: '4532015112830366',
+  },
+};
+
+mask.mask(data, {
+  fields: {
+    'user.email': { strategy: 'full' },
+    'billing.card': { strategy: 'last:4', format: 'display' },
+  },
+});
+
+// → {
+//   user: { email: '****************' },
+//   billing: { card: '**** **** **** 0366' }
+// }</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Types -->
+            <section id="types">
+                <h2>Type Definitions</h2>
+
+                <h3>MaskOptions</h3>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">interface MaskOptions {
+  strategy?: 'full' | 'middle' | 'first' | 'last' | 'partial';
+  first?: number;
+  last?: number;
+  char?: string;
+  format?: 'display' | 'compact' | 'log';
+}
+
+interface FieldMaskOptions extends MaskOptions {
+  // Additional field-specific options
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3>Plugin</h3>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">interface Plugin {
+  name: string;
+  version: string;
+  install(kernel: MaskKernel): void;
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3>MaskResult</h3>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">type MaskResult = string;</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Errors -->
+            <section id="errors">
+                <h2>Error Classes</h2>
+
+                <h3>InvalidValueError</h3>
+                <p>Thrown when the input value is invalid or fails validation.</p>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">try {
+  mask.email('invalid-email');
+} catch (error) {
+  if (error instanceof InvalidValueError) {
+    console.error('Invalid email:', error.message);
+  }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3>InvalidStrategyError</h3>
+                <p>Thrown when an unknown strategy is specified.</p>
+
+                <h3>InvalidFormatError</h3>
+                <p>Thrown when an unknown format is specified.</p>
+
+                <h3>PluginError</h3>
+                <p>Thrown when a plugin operation fails.</p>
+            </section>
+
+            <!-- Optional Plugins -->
+            <section id="optional-plugins">
+                <h2>Optional Plugins</h2>
+
+                <h3>mask.iban(value, options?)</h3>
+                <p>Masks an IBAN (International Bank Account Number).</p>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.use(require('@oxog/mask/plugins/optional/iban').iban());
+
+mask.iban('TR33 0006 1005 1978 6457 8413 26');
+// → TR33 •••• •••• •••• ••13 26</code></pre>
+                    </div>
+                </div>
+
+                <h3>mask.ip(value, options?)</h3>
+                <p>Masks an IP address (IPv4 or IPv6).</p>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.use(require('@oxog/mask/plugins/optional/ip').ip());
+
+mask.ip('192.168.1.1');
+// → 192.***.***.*
+
+mask.ip('2001:0db8:85a3:0000:0000:8a2e:0370:7334');
+// → 2001:0db8:85a3:****:****:****:****:****</code></pre>
+                    </div>
+                </div>
+
+                <h3>mask.jwt(value, options?)</h3>
+                <p>Masks a JWT (JSON Web Token).</p>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.use(require('@oxog/mask/plugins/optional/jwt').jwt());
+
+mask.jwt('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...');
+// → ***.************.***</code></pre>
+                    </div>
+                </div>
+
+                <h3>mask.ssn(value, options?)</h3>
+                <p>Masks a US Social Security Number.</p>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.use(require('@oxog/mask/plugins/optional/ssn').ssn());
+
+mask.ssn('123-45-6789');
+// → ***-**-6789</code></pre>
+                    </div>
+                </div>
+
+                <h3>mask.url(value, options?)</h3>
+                <p>Masks a URL, hiding credentials and sensitive query parameters.</p>
+                <div class="code-example">
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">mask.use(require('@oxog/mask/plugins/optional/url').url());
+
+mask.url('https://user:pass@example.com/path?secret=123');
+// → https://***:***@example.com/path?secret=***</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Custom Plugins -->
+            <section id="custom-plugins">
+                <h2>Creating Custom Plugins</h2>
+                <p>Extend the library with your own masking logic.</p>
+
+                <div class="code-example">
+                    <div class="code-example-header">Example Plugin</div>
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">const customPlugin = {
+  name: 'driverLicense',
+  version: '1.0.0',
+  install(kernel: MaskKernel) {
+    kernel.registerMasker('driverLicense', (value: string, options: MaskOptions = {}) => {
+      const { strategy = 'middle', char = '*' } = options;
+
+      // Your masking logic here
+      let result = '';
+      switch (strategy) {
+        case 'full':
+          result = char.repeat(value.length);
+          break;
+        case 'middle':
+        default:
+          const start = Math.floor(value.length * 0.25);
+          const end = Math.floor(value.length * 0.75);
+          result = value.substring(0, start) +
+                   char.repeat(end - start) +
+                   value.substring(end);
+          break;
+      }
+
+      return result;
+    });
+  },
+};
+
+mask.use(customPlugin);
+mask.driverLicense('ABC123456789');
+// → ABC******789</code></pre>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Table of Contents</h3>
+            <div id="toc"></div>
+
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../guides/index.html">Guides</a></li>
+                <li><a href="../examples/index.html">Examples</a></li>
+                <li><a href="https://github.com/oxog/mask">GitHub</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            © 2024 <a href="https://oxog.dev">Oxog</a>. Built with ❤️ for the developer community.
+        </p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

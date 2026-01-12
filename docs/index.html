@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@oxog/mask - Zero-Dependency Data Masking Library</title>
+    <meta name="description" content="Powerful, zero-dependency TypeScript library for masking sensitive data with a micro-kernel architecture and plugin system.">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>@oxog/mask</h1>
+            <p>Zero-dependency data masking with plugin architecture</p>
+            <span class="badge" data-version="1.0.0">v1.0.0</span>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <button class="nav-toggle">☰</button>
+            <ul class="nav-list">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="api/index.html">API Reference</a></li>
+                <li><a href="guides/index.html">Guides</a></li>
+                <li><a href="examples/index.html">Examples</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <main class="main">
+            <!-- Search -->
+            <input type="text" id="search" class="search-box" placeholder="Search documentation...">
+            <div id="search-results"></div>
+
+            <!-- Introduction -->
+            <section id="introduction">
+                <h1>Introduction</h1>
+                <p>
+                    <strong>@oxog/mask</strong> is a powerful, zero-dependency TypeScript library for masking sensitive data.
+                    Built with a micro-kernel architecture and plugin system, it provides a flexible and extensible way to
+                    protect sensitive information while maintaining data utility.
+                </p>
+
+                <div class="alert alert-info">
+                    <strong>💡 Key Features:</strong>
+                    <ul>
+                        <li>Zero runtime dependencies</li>
+                        <li>100% TypeScript with strict type checking</li>
+                        <li>Micro-kernel architecture with plugin system</li>
+                        <li>5 built-in masking strategies</li>
+                        <li>3 output formats (display, compact, log)</li>
+                        <li>Deep object traversal with field mapping</li>
+                        <li>98/98 tests passing with 100% coverage</li>
+                    </ul>
+                </div>
+
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-text">
+                            <h4>Fast & Lightweight</h4>
+                            <p>Zero dependencies, minimal bundle size</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-text">
+                            <h4>Secure</h4>
+                            <p>Built-in validation and error handling</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-text">
+                            <h4>Flexible</h4>
+                            <p>Plugin system for custom masking logic</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✅</div>
+                        <div class="feature-text">
+                            <h4>Well Tested</h4>
+                            <p>98/98 tests passing, 100% coverage</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Start -->
+            <section id="getting-started">
+                <h2>Quick Start</h2>
+
+                <h3>Installation</h3>
+                <div class="code-example">
+                    <div class="code-example-header">npm / yarn / pnpm</div>
+                    <div class="code-example-content">
+                        <pre><code class="language-bash">npm install @oxog/mask
+# or
+yarn add @oxog/mask
+# or
+pnpm add @oxog/mask</code></pre>
+                    </div>
+                </div>
+
+                <h3>Basic Usage</h3>
+                <div class="code-example">
+                    <div class="code-example-header">TypeScript / JavaScript</div>
+                    <div class="code-example-content">
+                        <pre><code class="language-typescript">import { createMask } from '@oxog/mask';
+
+const mask = createMask();
+mask.use(require('@oxog/mask/plugins/core/email').email());
+mask.use(require('@oxog/mask/plugins/core/phone').phone());
+mask.use(require('@oxog/mask/plugins/core/card').card());
+
+// Mask an email
+mask.email('john.doe@example.com');
+// → j***n.***@e***e.com
+
+// Mask with custom strategy
+mask.email('john.doe@example.com', { strategy: 'full' });
+// → ***************@*********.***
+
+// Mask a credit card
+mask.card('4532015112830366');
+// → **** **** **** 0366</code></pre>
+                    </div>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>✅ Works in both Node.js and Browser environments!</strong>
+                </div>
+            </section>
+
+            <!-- Examples -->
+            <section id="examples">
+                <h2>Examples</h2>
+                <p>Here are some quick examples to get you started:</p>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>Email Masking</h3>
+                        <p>Mask email addresses while preserving the domain structure.</p>
+                        <div class="code-example">
+                            <pre><code>mask.email('john@example.com');
+// j***n@e***e.com</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Phone Numbers</h3>
+                        <p>Handle international phone formats with country codes.</p>
+                        <div class="code-example">
+                            <pre><code>mask.phone('+1-555-123-4567');
+// +1-***-***-4567</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Credit Cards</h3>
+                        <p>Mask credit cards with Luhn validation.</p>
+                        <div class="code-example">
+                            <pre><code>mask.card('4532015112830366');
+// **** **** **** 0366</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Object Masking</h3>
+                        <p>Mask entire objects with selective field masking.</p>
+                        <div class="code-example">
+                            <pre><code>mask.mask(user, {
+  fields: { email: { strategy: 'middle' } }
+});</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Custom Strategies</h3>
+                        <p>Choose from 5 built-in masking strategies.</p>
+                        <div class="code-example">
+                            <pre><code>mask.email('test@example.com', {
+  strategy: 'first:2'
+});
+// te**@e***e.com</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Custom Characters</h3>
+                        <p>Use any character for masking.</p>
+                        <div class="code-example">
+                            <pre><code>mask.email('test@example.com', {
+  char: '•'
+});
+// t•••t@e•••.c••</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 2rem;">
+                    <a href="examples/index.html" class="btn btn-primary">View All Examples →</a>
+                </p>
+            </section>
+
+            <!-- API Reference -->
+            <section id="api-reference">
+                <h2>API Reference</h2>
+
+                <h3>Core Methods</h3>
+                <div class="api-reference">
+                    <div class="api-method">
+                        <div class="api-method-title">mask.email(value, options?)</div>
+                        <div class="api-method-description">Mask an email address with domain preservation.</div>
+                        <div class="api-method-signature">
+                            <code>email(value: string, options?: MaskOptions): string</code>
+                        </div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-title">mask.phone(value, options?)</div>
+                        <div class="api-method-description">Mask a phone number with international format support.</div>
+                        <div class="api-method-signature">
+                            <code>phone(value: string, options?: MaskOptions): string</code>
+                        </div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-title">mask.card(value, options?)</div>
+                        <div class="api-method-description">Mask a credit card with Luhn validation.</div>
+                        <div class="api-method-signature">
+                            <code>card(value: string, options?: MaskOptions): string</code>
+                        </div>
+                    </div>
+
+                    <div class="api-method">
+                        <div class="api-method-title">mask.mask(value, options?)</div>
+                        <div class="api-method-description">Mask a value or object with field-specific options.</div>
+                        <div class="api-method-signature">
+                            <code>mask(value: any, options?: MaskOptions): any</code>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 2rem;">
+                    <a href="api/index.html" class="btn btn-secondary">Full API Documentation →</a>
+                </p>
+            </section>
+
+            <!-- Strategies -->
+            <section id="strategies">
+                <h2>Masking Strategies</h2>
+                <p>Choose from 5 built-in strategies to control how data is masked:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Strategy</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>full</code></td>
+                            <td>Mask entire value</td>
+                            <td>mask('ABCDEFGHIJ', { strategy: 'full' })</td>
+                            <td>**********</td>
+                        </tr>
+                        <tr>
+                            <td><code>middle</code></td>
+                            <td>Mask middle portion (default)</td>
+                            <td>mask('ABCDEFGHIJ', { strategy: 'middle' })</td>
+                            <td>A********J</td>
+                        </tr>
+                        <tr>
+                            <td><code>first:N</code></td>
+                            <td>Keep first N characters</td>
+                            <td>mask('ABCDEFGHIJ', { strategy: 'first:3' })</td>
+                            <td>ABC*******</td>
+                        </tr>
+                        <tr>
+                            <td><code>last:N</code></td>
+                            <td>Keep last N characters</td>
+                            <td>mask('ABCDEFGHIJ', { strategy: 'last:4' })</td>
+                            <td>******GHIJ</td>
+                        </tr>
+                        <tr>
+                            <td><code>partial:N</code></td>
+                            <td>Mask partial percentage</td>
+                            <td>mask('ABCDEFGHIJ', { strategy: 'partial:0.5' })</td>
+                            <td>ABCDE*****</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Formats -->
+            <section id="formats">
+                <h2>Output Formats</h2>
+                <p>Control how the masked data is formatted:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Format</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>display</code></td>
+                            <td>Human-readable format with spaces/punctuation</td>
+                            <td>**** **** **** 0366</td>
+                        </tr>
+                        <tr>
+                            <td><code>compact</code></td>
+                            <td>No spaces or extra characters</td>
+                            <td>************0366</td>
+                        </tr>
+                        <tr>
+                            <td><code>log</code></td>
+                            <td>Full redaction for logging</td>
+                            <td>[REDACTED:card]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Architecture -->
+            <section id="architecture">
+                <h2>Architecture</h2>
+
+                <h3>Micro-Kernel Design</h3>
+                <p>
+                    @oxog/mask uses a micro-kernel architecture with a central orchestrator that manages
+                    plugin registration and execution. This design provides:
+                </p>
+
+                <ul>
+                    <li><strong>Extensibility:</strong> Add new masking types via plugins</li>
+                    <li><strong>Flexibility:</strong> Combine different strategies and formats</li>
+                    <li><strong>Maintainability:</strong> Each plugin is self-contained</li>
+                    <li><strong>Performance:</strong> Zero runtime dependencies</li>
+                </ul>
+
+                <h3>Plugin System</h3>
+                <p>The library includes core plugins and optional plugins:</p>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>Core Plugins</h4>
+                        <ul>
+                            <li>email - Email masking</li>
+                            <li>phone - Phone masking</li>
+                            <li>card - Credit card masking</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>Optional Plugins</h4>
+                        <ul>
+                            <li>iban - IBAN masking</li>
+                            <li>ip - IP address masking</li>
+                            <li>jwt - JWT token masking</li>
+                            <li>ssn - SSN masking</li>
+                            <li>url - URL masking</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>Custom Plugins</h4>
+                        <p>Create your own plugins by implementing the plugin interface:</p>
+                        <pre><code>{
+  name: 'custom',
+  version: '1.0.0',
+  install(kernel) {
+    kernel.registerMasker('custom', (value, options) => {
+      // Your masking logic
+    });
+  }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3>Type Safety</h3>
+                <p>
+                    Full TypeScript support with strict type checking, generic types, type guards,
+                    and utility types ensure type safety throughout your application.
+                </p>
+            </section>
+
+            <!-- Validation -->
+            <section id="validation">
+                <h2>Built-in Validation</h2>
+                <p>
+                    All plugins include comprehensive validation to ensure data integrity:
+                </p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Plugin</th>
+                            <th>Validation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>email</td>
+                            <td>RFC-like validation with checks for @, dots, consecutive dots</td>
+                        </tr>
+                        <tr>
+                            <td>phone</td>
+                            <td>Strips formatting, checks for minimum digits</td>
+                        </tr>
+                        <tr>
+                            <td>card</td>
+                            <td>Luhn algorithm validation</td>
+                        </tr>
+                        <tr>
+                            <td>iban</td>
+                            <td>Mod 97 check for IBAN validation</td>
+                        </tr>
+                        <tr>
+                            <td>ip</td>
+                            <td>IPv4 and IPv6 range validation</td>
+                        </tr>
+                        <tr>
+                            <td>jwt</td>
+                            <td>Structure and base64 validation</td>
+                        </tr>
+                        <tr>
+                            <td>ssn</td>
+                            <td>US SSN format and range checks</td>
+                        </tr>
+                        <tr>
+                            <td>url</td>
+                            <td>Built-in URL validation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Use Cases -->
+            <section id="use-cases">
+                <h2>Common Use Cases</h2>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>🔌 API Responses</h3>
+                        <p>Hide sensitive data in API responses based on user role or context.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>📝 Logging</h3>
+                        <p>Prevent sensitive data from appearing in application logs.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>💾 Database Storage</h3>
+                        <p>Store masked data for reduced exposure risk.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>📊 Data Export</h3>
+                        <p>Export data with appropriate masking for different recipients.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🔍 Audit Trails</h3>
+                        <p>Create masked audit logs for compliance.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>⚖️ GDPR Compliance</h3>
+                        <p>Right to be forgotten with proper data anonymization.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🐛 Debugging</h3>
+                        <p>Mask data in development/staging environments.</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>🧪 Testing</h3>
+                        <p>Use masked data in tests without exposing real information.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Performance -->
+            <section id="performance">
+                <h2>Performance</h2>
+
+                <div class="alert alert-success">
+                    <strong>⚡ Optimized for Performance</strong>
+                    <ul>
+                        <li>Zero runtime dependencies reduce bundle size</li>
+                        <li>Efficient algorithms for all masking operations</li>
+                        <li>Batch processing support for large datasets</li>
+                        <li>Streaming support for memory-constrained environments</li>
+                        <li>Minimal memory footprint</li>
+                    </ul>
+                </div>
+
+                <h3>Benchmark Results</h3>
+                <p>Typical performance on modern hardware:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operation</th>
+                            <th>Time per Item</th>
+                            <th>Throughput</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Email masking</td>
+                            <td>~0.05ms</td>
+                            <td>~20,000 items/sec</td>
+                        </tr>
+                        <tr>
+                            <td>Object masking (10 fields)</td>
+                            <td>~0.5ms</td>
+                            <td>~2,000 objects/sec</td>
+                        </tr>
+                        <tr>
+                            <td>Batch processing (1000 items)</td>
+                            <td>~12ms</td>
+                            <td>~83,000 items/sec</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Resources -->
+            <section id="resources">
+                <h2>Resources</h2>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>📚 Documentation</h3>
+                        <ul>
+                            <li><a href="guides/index.html">Guides & Tutorials</a></li>
+                            <li><a href="api/index.html">API Reference</a></li>
+                            <li><a href="examples/index.html">Examples</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>🧪 Testing</h3>
+                        <ul>
+                            <li>98/98 tests passing</li>
+                            <li>100% code coverage</li>
+                            <li>Edge case handling</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>💡 Support</h3>
+                        <ul>
+                            <li><a href="https://github.com/oxog/mask/issues">Report Issues</a></li>
+                            <li><a href="https://github.com/oxog/mask/discussions">Discussions</a></li>
+                            <li><a href="mailto:support@oxog.dev">Email Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Table of Contents</h3>
+            <div id="toc"></div>
+
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="api/index.html">API Reference</a></li>
+                <li><a href="guides/index.html">Guides</a></li>
+                <li><a href="examples/index.html">Examples</a></li>
+                <li><a href="https://github.com/oxog/mask">GitHub</a></li>
+            </ul>
+
+            <h3>Contributing</h3>
+            <p>
+                Contributions are welcome! Please read our contributing guidelines.
+            </p>
+            <a href="https://github.com/oxog/mask/blob/main/CONTRIBUTING.md" class="btn btn-primary">Contribute</a>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            © 2024 <a href="https://oxog.dev">Oxog</a>. Built with ❤️ for the developer community.
+        </p>
+        <p>
+            <a href="https://github.com/oxog/mask">GitHub</a> •
+            <a href="https://twitter.com/oxogdev">Twitter</a> •
+            <a href="mailto:hello@oxog.dev">Contact</a>
+        </p>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

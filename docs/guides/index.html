@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guides - @oxog/mask</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Guides & Tutorials</h1>
+            <p>Learn how to use @oxog/mask effectively</p>
+            <span class="badge" data-version="1.0.0">v1.0.0</span>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <button class="nav-toggle">☰</button>
+            <ul class="nav-list">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#getting-started">Getting Started</a></li>
+                <li><a href="../api/index.html">API Reference</a></li>
+                <li><a href="index.html">Guides</a></li>
+                <li><a href="../examples/index.html">Examples</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <main class="main">
+            <h1>Guides & Tutorials</h1>
+            <p>Step-by-step guides to help you master @oxog/mask.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🚀 Getting Started</h3>
+                    <p>Learn the basics of @oxog/mask and set up your first project.</p>
+                    <a href="getting-started.html" class="btn btn-primary">Read Guide →</a>
+                </div>
+
+                <div class="card">
+                    <h3>📝 Object Masking</h3>
+                    <p>Master masking entire objects with selective field protection.</p>
+                    <a href="object-masking.html" class="btn btn-primary">Read Guide →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🎯 Strategies</h3>
+                    <p>Understand and use all 5 masking strategies effectively.</p>
+                    <a href="strategies.html" class="btn btn-primary">Read Guide →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🎨 Custom Plugins</h3>
+                    <p>Create your own plugins for specialized masking needs.</p>
+                    <a href="custom-plugins.html" class="btn btn-primary">Read Guide →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🔒 Security Best Practices</h3>
+                    <p>Learn security best practices for data masking.</p>
+                    <a href="security.html" class="btn btn-primary">Read Guide →</a>
+                </div>
+
+                <div class="card">
+                    <h3>⚡ Performance Tips</h3>
+                    <p>Optimize your masking operations for better performance.</p>
+                    <a href="performance.html" class="btn btn-primary">Read Guide →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🌐 Real-World Use Cases</h3>
+                    <p>Explore practical examples from production environments.</p>
+                    <a href="use-cases.html" class="btn btn-primary">Read Guide →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🧪 Testing</h3>
+                    <p>Best practices for testing masking in your applications.</p>
+                    <a href="testing.html" class="btn btn-primary">Read Guide →</a>
+                </div>
+
+                <div class="card">
+                    <h3>⚙️ Configuration</h3>
+                    <p>Configure @oxog/mask for different environments and use cases.</p>
+                    <a href="configuration.html" class="btn btn-primary">Read Guide →</a>
+                </div>
+            </div>
+
+            <h2>Video Tutorials</h2>
+            <p>Watch step-by-step video tutorials:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>📺 Introduction to @oxog/mask</h3>
+                    <p>A comprehensive introduction to the library and its features.</p>
+                    <a href="#" class="btn btn-secondary">Watch (Coming Soon)</a>
+                </div>
+
+                <div class="card">
+                    <h3>📺 Advanced Object Masking</h3>
+                    <p>Learn advanced techniques for masking complex objects.</p>
+                    <a href="#" class="btn btn-secondary">Watch (Coming Soon)</a>
+                </div>
+
+                <div class="card">
+                    <h3>📺 Building Custom Plugins</h3>
+                    <p>Create your own plugins from scratch.</p>
+                    <a href="#" class="btn btn-secondary">Watch (Coming Soon)</a>
+                </div>
+            </div>
+
+            <h2>FAQ</h2>
+            <p>Frequently asked questions:</p>
+
+            <div class="alert alert-info">
+                <h4>How do I mask nested objects?</h4>
+                <p>Use dot notation in the <code>fields</code> option:</p>
+                <pre><code>mask.mask(data, {
+  fields: {
+    'user.email': { strategy: 'middle' },
+    'billing.card': { strategy: 'last:4' }
+  }
+});</code></pre>
+            </div>
+
+            <div class="alert alert-info">
+                <h4>Can I use custom masking characters?</h4>
+                <p>Yes! Use the <code>char</code> option:</p>
+                <pre><code>mask.email('test@example.com', { char: '•' });
+// → t•••t@e•••.c••</code></pre>
+            </div>
+
+            <div class="alert alert-info">
+                <h4>How do I validate input before masking?</h4>
+                <p>All plugins include built-in validation. Invalid data will throw an error:</p>
+                <pre><code>try {
+  const masked = mask.email('invalid-email');
+} catch (error) {
+  if (error instanceof InvalidValueError) {
+    console.error('Invalid email');
+  }
+}</code></pre>
+            </div>
+
+            <div class="alert alert-info">
+                <h4>Does @oxog/mask work in the browser?</h4>
+                <p>Yes! It's a pure TypeScript/JavaScript library with no dependencies.</p>
+            </div>
+
+            <div class="alert alert-info">
+                <h4>How do I create a custom plugin?</h4>
+                <p>Implement the Plugin interface and register it with <code>mask.use()</code>:</p>
+                <pre><code>const plugin = {
+  name: 'custom',
+  version: '1.0.0',
+  install(kernel) {
+    kernel.registerMasker('custom', (value, options) => {
+      // Your logic
+    });
+  }
+};
+mask.use(plugin);</code></pre>
+            </div>
+
+            <h2>Additional Resources</h2>
+            <ul>
+                <li><a href="../api/index.html">API Reference</a> - Complete API documentation</li>
+                <li><a href="../examples/index.html">Examples</a> - Code examples and demos</li>
+                <li><a href="https://github.com/oxog/mask">GitHub Repository</a> - Source code and issues</li>
+                <li><a href="https://github.com/oxog/mask/discussions">Discussions</a> - Community discussions</li>
+            </ul>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#object-masking">Object Masking</a></li>
+                <li><a href="#strategies">Strategies</a></li>
+                <li><a href="#custom-plugins">Custom Plugins</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#use-cases">Use Cases</a></li>
+                <li><a href="#testing">Testing</a></li>
+                <li><a href="#configuration">Configuration</a></li>
+            </ul>
+
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../api/index.html">API Reference</a></li>
+                <li><a href="../examples/index.html">Examples</a></li>
+                <li><a href="https://github.com/oxog/mask">GitHub</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            © 2024 <a href="https://oxog.dev">Oxog</a>. Built with ❤️ for the developer community.
+        </p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

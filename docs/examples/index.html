@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examples - @oxog/mask</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Examples</h1>
+            <p>Code examples and practical demonstrations</p>
+            <span class="badge" data-version="1.0.0">v1.0.0</span>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <button class="nav-toggle">☰</button>
+            <ul class="nav-list">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#getting-started">Getting Started</a></li>
+                <li><a href="../api/index.html">API Reference</a></li>
+                <li><a href="../guides/index.html">Guides</a></li>
+                <li><a href="index.html">Examples</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <main class="main">
+            <h1>Examples</h1>
+            <p>Explore 18 comprehensive examples demonstrating @oxog/mask features and use cases.</p>
+
+            <h2>Basic Examples</h2>
+            <p>Start with these fundamental examples:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>01. Basic Email Masking</h3>
+                    <p>Learn the basics of email masking with different strategies.</p>
+                    <div class="code-example">
+                        <pre><code>mask.email('john.doe@example.com');
+// → j***n.***@e***e.com</code></pre>
+                    </div>
+                    <a href="basic/01-basic-email-masking.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>02. Custom Strategies</h3>
+                    <p>Explore all 5 masking strategies with practical examples.</p>
+                    <div class="code-example">
+                        <pre><code>mask.email('test@example.com', {
+  strategy: 'first:2'
+});
+// → te**@e***e.com</code></pre>
+                    </div>
+                    <a href="basic/02-custom-strategies.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>03. Phone Masking</h3>
+                    <p>Handle international phone formats with country codes.</p>
+                    <div class="code-example">
+                        <pre><code>mask.phone('+1-555-123-4567');
+// → +1-***-***-4567</code></pre>
+                    </div>
+                    <a href="basic/03-phone-masking.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>04. Credit Card Masking</h3>
+                    <p>Mask credit cards with Luhn validation and formatting.</p>
+                    <div class="code-example">
+                        <pre><code>mask.card('4532015112830366');
+// → **** **** **** 0366</code></pre>
+                    </div>
+                    <a href="basic/04-credit-card-masking.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>05. Custom Masking Characters</h3>
+                    <p>Use different characters like •, █, # for masking.</p>
+                    <div class="code-example">
+                        <pre><code>mask.email('test@example.com', {
+  char: '•'
+});
+// → t•••t@e•••.c••</code></pre>
+                    </div>
+                    <a href="basic/05-custom-masking-characters.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>06. Multiple Data Types</h3>
+                    <p>Work with email, phone, card, IBAN, and IP addresses.</p>
+                    <div class="code-example">
+                        <pre><code>// Email, phone, card, IBAN, IP
+mask.email('test@example.com');
+mask.phone('+1-555-123-4567');
+mask.card('4532015112830366');</code></pre>
+                    </div>
+                    <a href="basic/06-multiple-data-types.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+            </div>
+
+            <h2>Advanced Examples</h2>
+            <p>Learn advanced techniques and patterns:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>01. Object Masking</h3>
+                    <p>Mask entire objects with selective field protection.</p>
+                    <div class="code-example">
+                        <pre><code>mask.mask(user, {
+  fields: {
+    email: { strategy: 'middle' },
+    phone: { strategy: 'last:4' }
+  }
+});</code></pre>
+                    </div>
+                    <a href="advanced/01-object-masking.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>02. Formatting Options</h3>
+                    <p>Use display, compact, and log formats effectively.</p>
+                    <div class="code-example">
+                        <pre><code>// Display, Compact, Log
+mask.card('4532015112830366', {
+  format: 'display'
+});
+// → **** **** **** 0366</code></pre>
+                    </div>
+                    <a href="advanced/02-formatting-options.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>03. Logging Integration</h3>
+                    <p>Integrate masking with logging systems.</p>
+                    <div class="code-example">
+                        <pre><code>logger.info('User login', {
+  email: 'user@example.com'
+});
+// → [INFO] User login [REDACTED:email]</code></pre>
+                    </div>
+                    <a href="advanced/03-logging-integration.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>04. Database Integration</h3>
+                    <p>Store masked data in databases safely.</p>
+                    <div class="code-example">
+                        <pre><code>saveUser({
+  email: 'john@example.com',
+  card: '4532015112830366'
+});
+// Stores: j***n.***@e***e.com</code></pre>
+                    </div>
+                    <a href="advanced/04-database-integration.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>05. API Response Masking</h3>
+                    <p>Mask API responses based on user role or context.</p>
+                    <div class="code-example">
+                        <pre><code>// Public vs Admin views
+public:  mask.mask(data, { ... });
+admin:   mask.mask(data, { ... });</code></pre>
+                    </div>
+                    <a href="advanced/05-api-response-masking.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>05. Custom Plugin Example</h3>
+                    <p>Create custom plugins for specialized masking.</p>
+                    <div class="code-example">
+                        <pre><code>const plugin = {
+  install(kernel) {
+    kernel.registerMasker('custom', ...);
+  }
+};
+mask.use(plugin);</code></pre>
+                    </div>
+                    <a href="advanced/05-custom-plugin-example.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>06. Batch Processing</h3>
+                    <p>Process multiple items efficiently with batch operations.</p>
+                    <div class="code-example">
+                        <pre><code>batchMask(users, (user) =>
+  mask.mask(user, { fields: ... })
+);</code></pre>
+                    </div>
+                    <a href="advanced/06-batch-processing-example.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>07. Configuration</h3>
+                    <p>Use presets and custom configurations effectively.</p>
+                    <div class="code-example">
+                        <pre><code>// Public, Standard, Strict, Audit
+applyConfig(data, 'public');
+applyConfig(data, 'strict');</code></pre>
+                    </div>
+                    <a href="advanced/07-configuration-example.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>08. TypeScript Types</h3>
+                    <p>Full TypeScript integration with type safety.</p>
+                    <div class="code-example">
+                        <pre><code>interface MaskedUser {
+  email: MaskResult;
+  phone: MaskResult;
+}</code></pre>
+                    </div>
+                    <a href="advanced/08-typescript-types-example.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+            </div>
+
+            <h2>Real-World Examples</h2>
+            <p>Production-ready examples from real applications:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3>01. User Database</h3>
+                    <p>Complete user database example with masking.</p>
+                    <div class="code-example">
+                        <pre><code>class UserDatabase {
+  addUser(user) {
+    const masked = mask.mask(user, {
+      fields: { email: { strategy: 'middle' } }
+    });
+    // Store masked data
+  }
+}</code></pre>
+                    </div>
+                    <a href="real-world/01-user-database-example.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>02. Logging Middleware</h3>
+                    <p>Express-style middleware for automatic request logging.</p>
+                    <div class="code-example">
+                        <pre><code>class LoggingMiddleware {
+  logRequest(req, res, next) {
+    const maskedBody = mask.mask(req.body, {
+      format: 'log'
+    });
+    // Log masked data
+  }
+}</code></pre>
+                    </div>
+                    <a href="real-world/02-logging-middleware.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>03. API Security</h3>
+                    <p>Security levels and role-based masking.</p>
+                    <div class="code-example">
+                        <pre><code>// Public, Internal, Confidential, Secret
+getUserProfile(id, role) {
+  return applySecurity(user, role);
+}</code></pre>
+                    </div>
+                    <a href="real-world/03-api-security-example.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+
+                <div class="card">
+                    <h3>04. Data Export</h3>
+                    <p>Safe data export with GDPR compliance.</p>
+                    <div class="code-example">
+                        <pre><code>exportUserData(id, recipient) {
+  return maskUserData(data, recipient);
+}
+// GDPR: User, Partner, Auditor, Public</code></pre>
+                    </div>
+                    <a href="real-world/04-data-export-example.ts.html" class="btn btn-primary">View Example →</a>
+                </div>
+            </div>
+
+            <h2>Running Examples</h2>
+            <p>All examples are executable:</p>
+
+            <div class="alert alert-success">
+                <h4>Run Examples</h4>
+                <pre><code># Install dependencies
+npm install
+
+# Run an example
+npx ts-node examples/basic/01-basic-email-masking.ts
+
+# Run all examples
+npm run examples</code></pre>
+            </div>
+
+            <h2>Example Categories</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Count</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Basic</td>
+                        <td>6</td>
+                        <td>Fundamental concepts and basic usage</td>
+                    </tr>
+                    <tr>
+                        <td>Advanced</td>
+                        <td>8</td>
+                        <td>Advanced techniques and patterns</td>
+                    </tr>
+                    <tr>
+                        <td>Real-World</td>
+                        <td>4</td>
+                        <td>Production-ready implementations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td><strong>18</strong></td>
+                        <td>Comprehensive coverage</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../api/index.html">API Reference</a></li>
+                <li><a href="../guides/index.html">Guides</a></li>
+                <li><a href="https://github.com/oxog/mask">GitHub</a></li>
+            </ul>
+
+            <h3>Example Files</h3>
+            <ul>
+                <li><a href="basic/01-basic-email-masking.ts">Basic Email</a></li>
+                <li><a href="basic/02-custom-strategies.ts">Custom Strategies</a></li>
+                <li><a href="basic/03-phone-masking.ts">Phone Masking</a></li>
+                <li><a href="basic/04-credit-card-masking.ts">Credit Card</a></li>
+                <li><a href="basic/05-custom-masking-characters.ts">Custom Chars</a></li>
+                <li><a href="basic/06-multiple-data-types.ts">Multiple Types</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>
+            © 2024 <a href="https://oxog.dev">Oxog</a>. Built with ❤️ for the developer community.
+        </p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
